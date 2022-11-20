@@ -1,0 +1,62 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext {
+        // app version
+
+        versionCode = 1
+        versionName = "1.0"
+
+        // SDK and tools
+        compileSdkVersion = 33
+        minSdkVersion = 21
+        targetSdkVersion = 33
+        buildToolsVersion = '30.0.2'
+
+
+        coreKtx = 'androidx.core:core-ktx:1.9.0'
+        appCompact = 'androidx.appcompat:appcompat:1.5.1'
+        androidMaterial = 'com.google.android.material:material:1.7.0'
+        constraintlayout = 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+        // ViewModel
+        lifeCycleExtension = "androidx.lifecycle:lifecycle-extensions:2.2.0"
+        lifeCycleViewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+
+        // coroutines
+        coroutines = 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+        coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3"
+
+
+        // koin
+        koinCore = "io.insert-koin:koin-core:3.2.0"
+        koinAndroid = "io.insert-koin:koin-android:3.2.0"
+        //koin-androidx-fragment, koin-androidx-viewmodel , koin-androidx-scope
+
+        // Retrofit
+        okhttp = 'com.squareup.okhttp3:okhttp:4.9.0'
+        interceptor = 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+        retrofit = 'com.squareup.retrofit2:retrofit:2.7.1'
+        retrofitGson = 'com.squareup.retrofit2:converter-gson:2.6.0'
+
+        //testing
+        jUnit = 'junit:junit:4.13.2'
+        jUnitExt = 'androidx.test.ext:junit:1.1.4'
+        espresso = 'androidx.test.espresso:espresso-core:3.5.0'
+    }
+}
+plugins {
+    id 'com.android.application' version '7.3.1' apply false
+    id 'com.android.library' version '7.3.1' apply false
+    id 'org.jetbrains.kotlin.android' version '1.7.20' apply false
+    id 'org.jetbrains.kotlin.jvm' version '1.7.20' apply false
+}
+
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        if (details.requested.group == 'org.koin' && details.requested.name == 'koin-androidx-viewmodel') {
+            details.useTarget group: 'io.insert-koin', name: 'koin-android', version: details.requested.version
+        }
+    }
+}

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class=".HoldingFragmentBinding">
+
+        <variable
+            name="viewModel"
+            type="com.android.stocks.HoldingFragmentViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/holdingsRv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:paddingTop="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/profitLoss"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/currentValueLabel" />
+
+        <TextView
+            android:id="@+id/profitLoss"
+            style="@style/InvestmentDetailHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="0dp"
+            android:paddingBottom="16dp"
+            android:text="@string/profit_amp_loss"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/todaysProfitLoss"
+            style="@style/InvestmentDetailHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="@string/today_s_profit_amp_loss"
+            app:layout_constraintBottom_toTopOf="@+id/profitLoss"
+            app:layout_constraintStart_toStartOf="@+id/profitLoss" />
+
+        <TextView
+            android:id="@+id/totalInvestment"
+            style="@style/InvestmentDetailHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/total_investment"
+            app:layout_constraintBottom_toTopOf="@+id/todaysProfitLoss"
+            app:layout_constraintStart_toStartOf="@+id/todaysProfitLoss" />
+
+        <TextView
+            android:id="@+id/currentValueLabel"
+            style="@style/InvestmentDetailHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:text="@string/current_value"
+            app:layout_constraintBottom_toTopOf="@+id/totalInvestment"
+            app:layout_constraintStart_toStartOf="@+id/totalInvestment" />
+
+
+        <TextView
+            android:id="@+id/profitLossValue"
+            style="@style/InvestmentDetailValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:paddingBottom="16dp"
+            app:amt="@{String.valueOf(viewModel.profitLossData)}"
+            app:layout_constraintBottom_toBottomOf="@+id/profitLoss"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/profitLoss"
+            tools:text="469088" />
+
+        <TextView
+            android:id="@+id/todaysProfitLossValue"
+            style="@style/InvestmentDetailValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:amt="@{String.valueOf(viewModel.todayProfitLossData)}"
+            app:layout_constraintBottom_toBottomOf="@+id/todaysProfitLoss"
+            app:layout_constraintEnd_toEndOf="@+id/profitLossValue"
+            app:layout_constraintTop_toTopOf="@+id/todaysProfitLoss"
+            tools:text="-96000" />
+
+        <TextView
+            android:id="@+id/totalInvestmentValue"
+            style="@style/InvestmentDetailValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:amt="@{String.valueOf(viewModel.totalInvestmentData)}"
+            app:layout_constraintBottom_toBottomOf="@+id/totalInvestment"
+            app:layout_constraintEnd_toEndOf="@+id/profitLossValue"
+            app:layout_constraintTop_toTopOf="@+id/totalInvestment"
+            tools:text="32400" />
+
+        <TextView
+            android:id="@+id/currentValue"
+            style="@style/InvestmentDetailValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            app:amt="@{String.valueOf(viewModel.currentValueData)}"
+            app:layout_constraintBottom_toBottomOf="@+id/currentValueLabel"
+            app:layout_constraintEnd_toEndOf="@+id/profitLossValue"
+            app:layout_constraintTop_toTopOf="@+id/currentValueLabel"
+            tools:text="789000" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

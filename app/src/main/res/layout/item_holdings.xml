@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class=".HoldingsItemBinding">
+
+        <variable
+            name="data"
+            type="com.android.stocks.HoldingsUiData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/symbol"
+            style="@style/InvestmentDetailItemHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@{data.symbol}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Symbol" />
+
+        <TextView
+            android:id="@+id/qty"
+            style="@style/InvestmentDetailItemValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@{String.valueOf(data.qty)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/symbol"
+            app:layout_constraintTop_toBottomOf="@+id/symbol"
+            tools:text="Quantity" />
+
+        <TextView
+            android:id="@+id/ltpLabel"
+            style="@style/InvestmentDetailItemValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:text="@string/ltp"
+            app:layout_constraintBottom_toBottomOf="@+id/ltp"
+            app:layout_constraintEnd_toStartOf="@+id/ltp"
+            app:layout_constraintTop_toTopOf="@+id/ltp" />
+
+        <TextView
+            android:id="@+id/ltp"
+            style="@style/InvestmentDetailItemHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/black"
+            app:amt="@{data.ltp}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/symbol"
+            tools:text="LTP" />
+
+
+        <TextView
+            android:id="@+id/pnlLabel"
+            style="@style/InvestmentDetailItemValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:text="@string/pnl"
+            app:layout_constraintBottom_toBottomOf="@+id/pnl"
+            app:layout_constraintEnd_toStartOf="@+id/pnl"
+            app:layout_constraintTop_toTopOf="@+id/pnl" />
+
+        <TextView
+            android:id="@+id/pnl"
+            style="@style/InvestmentDetailItemHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:amt="@{data.pnl}"
+            app:layout_constraintBottom_toBottomOf="@+id/qty"
+            app:layout_constraintEnd_toEndOf="@+id/ltp"
+            app:layout_constraintTop_toBottomOf="@+id/ltp"
+            tools:text="P/L" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
