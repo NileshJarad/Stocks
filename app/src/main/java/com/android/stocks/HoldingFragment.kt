@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -39,6 +40,12 @@ class HoldingFragment : Fragment() {
         stockVm.holdingLiveData.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 holdingAdapter.addHoldings(it)
+            }
+        }
+
+        stockVm.errorLiveData.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                Snackbar.make(binding.holdingsRv, it, Snackbar.LENGTH_SHORT).show()
             }
         }
     }

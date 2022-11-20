@@ -1,6 +1,6 @@
 package com.android.stocks
 
-import android.util.Log
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,7 +17,10 @@ class HoldingFragmentViewModel(private val useCase: StockListUseCase) : ViewMode
     private val _holdingsData = MutableLiveData<List<HoldingsUiData>>()
     val holdingLiveData: LiveData<List<HoldingsUiData>> = _holdingsData
 
+    private val _error = MutableLiveData<String>()
+    val errorLiveData: LiveData<String> = _error
 
+    val loadingState = ObservableBoolean()
     val currentValueData = ObservableField("")
     val totalInvestmentData = ObservableField("")
     val todayProfitLossData = ObservableField("")
@@ -35,9 +38,10 @@ class HoldingFragmentViewModel(private val useCase: StockListUseCase) : ViewMode
             var tempPnl = 0.0
             useCase.getHoldings().collect {
                 when (it) {
-                    is OutCome.Loading -> Log.d(TAG, "Loading data")
+                    is OutCome.Loading -> {
+                        loadingState.set(true)
+                    }
                     is OutCome.Success -> {
-                        Log.d(TAG, "Loading data $it")
                         _holdingsData.value = it.data.map { mapIt ->
 
                             val currValue = useCase.getCurrentValue(mapIt.ltp, mapIt.quantity)
@@ -51,8 +55,6 @@ class HoldingFragmentViewModel(private val useCase: StockListUseCase) : ViewMode
                             tempCurrent += currValue
                             tempInvestmentValue += investmentValue
 
-
-
                             mapIt.toUiModel(
                                 useCase.getPnl(currValue, investmentValue), decimalFormat
                             )
@@ -61,16 +63,18 @@ class HoldingFragmentViewModel(private val useCase: StockListUseCase) : ViewMode
                         totalInvestmentData.set(decimalFormat.format(tempInvestmentValue))
                         profitLossData.set(decimalFormat.format(tempCurrent - tempInvestmentValue))
                         todayProfitLossData.set(decimalFormat.format(tempPnl))
+                        loadingState.set(false)
                     }
-                    is OutCome.Failed -> Log.d(TAG, "Loading Failed")
-                    else -> {}
+                    is OutCome.Failed -> {
+                        _error.value = it.message
+                        loadingState.set(false)
+                    }
+                    else -> {
+                        loadingState.set(false)
+                    }
                 }
             }
         }
-    }
-
-    companion object {
-        private const val TAG = "HoldingFragmentViewMode"
     }
 }
 
