@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.flowOn
 
 class StocksListRepositoryImpl(private val api: StockListApi) : StocksListRepository {
     private val message = "Failed to load the holdings."
-    private val token = "6d0ad460-f600-47a7-b973-4a779ebbaeaf"
+    private val token = "b37f1a74-2bbb-428d-b05c-df6e1680a3b4"
 
     override fun getStocksList() = flow {
         emit(OutCome.Loading)
