@@ -1,0 +1,48 @@
+{
+  "client_id": "local-mock",
+  "data": [
+    {
+      "avg_price": "3200.50",
+      "close": 3390.00,
+      "company_name": "Tata Consultancy Services",
+      "ltp": 3450.75,
+      "quantity": 10,
+      "symbol": "TCS"
+    },
+    {
+      "avg_price": "1450.00",
+      "close": 1520.50,
+      "company_name": "Infosys",
+      "ltp": 1498.25,
+      "quantity": 25,
+      "symbol": "INFY"
+    },
+    {
+      "avg_price": "2400.00",
+      "close": 2611.10,
+      "company_name": "Reliance Industries",
+      "ltp": 2655.40,
+      "quantity": 15,
+      "symbol": "RELIANCE"
+    },
+    {
+      "avg_price": "1650.80",
+      "close": 1610.00,
+      "company_name": "HDFC Bank",
+      "ltp": 1589.60,
+      "quantity": 20,
+      "symbol": "HDFCBANK"
+    },
+    {
+      "avg_price": "980.00",
+      "close": 1024.30,
+      "company_name": "ICICI Bank",
+      "ltp": 1045.90,
+      "quantity": 30,
+      "symbol": "ICICIBANK"
+    }
+  ],
+  "error": "",
+  "response_type": "success",
+  "timestamp": 1730000000000
+}

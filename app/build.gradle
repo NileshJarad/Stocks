@@ -1,19 +1,21 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
     namespace 'com.android.stocks'
-    compileSdk rootProject.compileSdkVersion
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.android.stocks"
-        minSdk rootProject.minSdkVersion
-        targetSdk rootProject.targetSdkVersion
-        versionCode rootProject.versionCode
-        versionName rootProject.versionName
+        minSdk 24
+        targetSdk 35
+        versionCode 1
+        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -24,38 +26,45 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
+
+    buildFeatures {
+        compose true
     }
 
-    dataBinding {
-        enabled = true
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
     }
 }
 
 dependencies {
-    implementation rootProject.coreKtx
-    implementation rootProject.appCompact
-    implementation rootProject.androidMaterial
-    implementation rootProject.constraintlayout
+    implementation project(':feature:holdings')
+    implementation project(':data')
+    implementation project(':domain')
+    implementation project(':core:common')
+    implementation project(':core:designsystem')
 
-    implementation rootProject.lifeCycleExtension
-    implementation rootProject.lifeCycleViewModelKtx
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.activity.compose
+    implementation libs.androidx.lifecycle.runtime.ktx
 
-    implementation rootProject.coroutines
-    implementation rootProject.coroutinesCore
+    implementation platform(libs.compose.bom)
+    implementation libs.compose.ui
+    implementation libs.compose.material3
+    implementation libs.compose.ui.tooling.preview
+    debugImplementation libs.compose.ui.tooling
 
-    implementation rootProject.koinAndroid
+    implementation libs.hilt.android
+    ksp libs.hilt.compiler
 
-    implementation project(path: ':domain')
-    implementation project(path: ':data')
-
-    testImplementation rootProject.jUnit
-    androidTestImplementation rootProject.jUnitExt
-    androidTestImplementation rootProject.espresso
-
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.test.ext.junit
+    androidTestImplementation libs.androidx.test.espresso.core
+    androidTestImplementation platform(libs.compose.bom)
+    androidTestImplementation libs.compose.ui.test.junit4
+    debugImplementation libs.compose.ui.test.manifest
 }

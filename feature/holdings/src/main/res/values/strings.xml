@@ -1,0 +1,14 @@
+<resources>
+    <string name="holdings_title">Holdings</string>
+    <string name="current_value">Current Value</string>
+    <string name="total_investment">Total Investment</string>
+    <string name="profit_loss">Profit &amp; Loss</string>
+    <string name="todays_profit_loss">Today\'s Profit &amp; Loss</string>
+    <string name="ltp_label">LTP</string>
+    <string name="pnl_label">P/L</string>
+    <string name="qty_label">Qty</string>
+    <string name="retry">Retry</string>
+    <string name="empty_title">No holdings yet</string>
+    <string name="empty_subtitle">Your holdings will appear here.</string>
+    <string name="error_title">Something went wrong</string>
+</resources>

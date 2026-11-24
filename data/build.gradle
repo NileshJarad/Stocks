@@ -1,18 +1,44 @@
+import java.util.Properties
+
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withInputStream { localProperties.load(it) }
+}
+
+def baseUrl = localProperties.getProperty('BASE_URL')
+        ?: project.findProperty('BASE_URL')
+        ?: 'https://run.mocky.io/'
+def stocksToken = localProperties.getProperty('STOCKS_TOKEN')
+        ?: project.findProperty('STOCKS_TOKEN')
+        ?: '6d0ad460-f600-47a7-b973-4a779ebbaeaf'
+def useLocalMock = (localProperties.getProperty('USE_LOCAL_MOCK')
+        ?: project.findProperty('USE_LOCAL_MOCK')
+        ?: 'true').toBoolean()
 
 android {
     namespace 'com.android.stocks.data'
-    compileSdk rootProject.compileSdkVersion
+    compileSdk 35
 
     defaultConfig {
-        minSdk rootProject.minSdkVersion
-        targetSdk rootProject.targetSdkVersion
+        minSdk 24
+        consumerProguardFiles 'consumer-rules.pro'
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
+        buildConfigField 'String', 'BASE_URL', "\"${baseUrl}\""
+        buildConfigField 'String', 'STOCKS_TOKEN', "\"${stocksToken}\""
+        buildConfigField 'boolean', 'USE_LOCAL_MOCK', "${useLocalMock}"
+    }
+
+    buildFeatures {
+        buildConfig true
     }
 
     buildTypes {
@@ -21,29 +47,35 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
+
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
 }
 
 dependencies {
-    implementation rootProject.coreKtx
-    implementation rootProject.coroutines
-    implementation rootProject.coroutinesCore
+    implementation project(':domain')
+    implementation project(':core:common')
 
-    implementation rootProject.okhttp
-    implementation rootProject.interceptor
-    implementation rootProject.retrofit
-    implementation rootProject.retrofitGson
+    implementation libs.hilt.android
+    ksp libs.hilt.compiler
 
-    implementation rootProject.koinAndroid
+    implementation libs.kotlinx.coroutines.android
+    implementation libs.kotlinx.serialization.json
 
-    implementation project(path: ':domain')
+    implementation libs.retrofit
+    implementation libs.retrofit.serialization
+    implementation libs.okhttp
+    implementation libs.okhttp.logging
+    implementation libs.javax.inject
 
-    testImplementation rootProject.jUnit
-    androidTestImplementation rootProject.jUnitExt
+    testImplementation libs.junit
+    testImplementation libs.kotlin.test
+    testImplementation libs.truth
+    testImplementation libs.kotlinx.coroutines.test
 }

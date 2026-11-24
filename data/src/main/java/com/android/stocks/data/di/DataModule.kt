@@ -1,12 +1,18 @@
 package com.android.stocks.data.di
 
-import com.android.stocks.data.StocksListRepositoryImpl
-import com.android.stocks.data.network.RetrofitBuilder
-import com.android.stocks.domain.StocksListRepository
-import org.koin.dsl.bind
-import org.koin.dsl.module
+import com.android.stocks.data.repository.StocksRepositoryImpl
+import com.android.stocks.domain.repository.StocksRepository
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
-val datModule = module {
-    single { RetrofitBuilder().apiService }
-    single { StocksListRepositoryImpl(get()) } bind StocksListRepository::class
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class DataModule {
+
+    @Binds
+    @Singleton
+    abstract fun bindStocksRepository(impl: StocksRepositoryImpl): StocksRepository
 }
